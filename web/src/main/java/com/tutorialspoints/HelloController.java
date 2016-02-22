@@ -1,4 +1,4 @@
-package com.tutorialspoint;
+package com.tutorialspoints;
 /**
  * Created by root on 16-2-22.
  */
@@ -13,7 +13,7 @@ public class HelloController{
 
     @RequestMapping(method = RequestMethod.GET)
     public String printHello(ModelMap model) {
-        model.addAttribute("message", "Hello Spring MVC Framework!");
+        model.addAttribute("message", "Hello Spring MVC Framework!!!");
 
         return "hello";
     }
