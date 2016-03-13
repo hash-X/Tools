@@ -45,7 +45,6 @@ class ReadWriteFileCallable implements Callable<Long> {
         }
     }
 
-
     public void cleanUp() {
         if (isRead) {
             new File(localDir + fileName).delete();
@@ -63,7 +62,7 @@ class ReadWriteFileCallable implements Callable<Long> {
         System.out.println("Concurrent process is  " + id);
         System.out.println("Running " + cmd);
         long start = System.currentTimeMillis();
-        Process process = Runtime.getRuntime().exec(cmd);
+        Process process = Runtime.getRuntime().exec(cmd); // execute a command in terminal
         if (process.waitFor() != 0) {
             BufferedReader readerInputStream = new BufferedReader(new InputStreamReader(process.getInputStream()));
             BufferedReader readerErrStream = new BufferedReader(new InputStreamReader(process.getErrorStream()));
@@ -109,21 +108,22 @@ class ReadWriteFileCallable implements Callable<Long> {
             List<Future<Long>> futureList = new ArrayList<Future<Long>>();
             List<ReadWriteFileCallable> callables = new ArrayList<ReadWriteFileCallable>();
 
-            for (int i = 0; i < numClient; i++) {
+            for (int i = 0; i < numClient; i++) { // Concurrent
                 ReadWriteFileCallable callable = new ReadWriteFileCallable(read, ec, coder);
                 futureList.add(executor.submit(callable));
                 callables.add(callable);
             }
 
             int i = 0;
-            int j = 0;
             long sumTime = 0;
             double[] storageTime = new double[numClient];
+
             for (Future<Long> future : futureList) {
                 storageTime[i++] = future.get() / 1000.0;
                 System.out.println("" + (read ? "Read" : "Write") + " time " + future.get() / 1000.0 + "s"
                         + "  Throughput = " + (12 * 1024) / (future.get() / 1000.0) + " MB/s");
             }
+
             long endTime = System.currentTimeMillis();
             for (i = 0; i < numClient; i++) {
                 sumTime += storageTime[i];
