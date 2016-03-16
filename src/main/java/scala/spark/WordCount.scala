@@ -1,7 +1,9 @@
-package scala
+package scala.spark
 
 import java.io.File
+
 import org.apache.spark.{SparkConf, SparkContext}
+
 import scala.util.FileUtil
 
 /**
@@ -28,7 +30,7 @@ object WordCount extends App {
   // zhang li
   // wang wang
   // uu ii uu
-  val lines = sc.textFile("/root/Tools/src/main/java/scala/input_output/hello", 1)
+  val lines = sc.textFile("/root/Tools/src/main/java/scala/original_data/hello", 1)
 
   // string[] := [ zhang,li,wang,wang,uu,ii,uu ]
   val words = lines.flatMap(_.split(" ")).filter(!_.equals("ii"))
