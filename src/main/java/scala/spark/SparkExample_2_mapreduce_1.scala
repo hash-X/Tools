@@ -5,10 +5,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 /**
   * total length for a text
   */
-object SparkExample_2_mapreduce_1 extends App {
-  val conf = new SparkConf().setMaster("local[8]").setAppName("1")
-  val sc = new SparkContext(conf)
-
+object SparkExample_2_mapreduce_1 extends App with MySparkContext {
   //  lines is merely a pointer to the file.
   val lines = sc.textFile("/root/Tools/src/main/java/scala/original_data/hello")
 

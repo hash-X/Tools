@@ -21,19 +21,17 @@ import scala.util.FileUtil
   *
   */
 
-object WordCount extends App {
+object WordCount extends App with MySparkContext {
   val fold = "/root/Tools/src/main/java/scala/output"
-  val conf = new SparkConf().setAppName("WordCount").setMaster("local[8]")
-  val sc = new SparkContext(conf)
-
   // lines :=
   // zhang li
   // wang wang
   // uu ii uu
-  val lines = sc.textFile("/root/Tools/src/main/java/scala/original_data/hello", 1)
+
+  val lines = sc.textFile("/root/Tools/src/main/java/scala/original_data/metadata.txt", 1).cache()
 
   // string[] := [ zhang,li,wang,wang,uu,ii,uu ]
-  val words = lines.flatMap(_.split(" ")).filter(!_.equals("ii"))
+  val words = lines.flatMap(_.split(",")).filter(!_.equals("ii"))
   println(words.first())
   println("The document have totally " + words.count() + " number of words without ii")
 
@@ -45,7 +43,7 @@ object WordCount extends App {
       //  (zhang,1)
       //  (wang,2)
   val wc = during.reduceByKey(_ + _)
-  wc.foreach(println)
-  FileUtil.deleteDir(new File(fold))
-  wc.saveAsTextFile("/root/Tools/src/main/java/scala/output")
+//  wc.foreach(println)
+//  FileUtil.deleteDir(new File(fold))
+//  wc.saveAsTextFile("/root/Tools/src/main/java/scala/output")
 }
