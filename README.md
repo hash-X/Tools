@@ -1,4 +1,4 @@
-# This is not just the javaproject as title described, it contains other tools not only scala project but Machine Learning
+# There are some tools which help you learn more about Scala / Spark / Hadoop / Algorithms etc.
 
 1: MachineLearning add Missing value imputation and Dummy_create `Category variable to Dummy variable`
 
