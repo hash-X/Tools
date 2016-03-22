@@ -2,3 +2,4 @@
 .idea/*
 target/*
 web/target/
+src/main/java/scala/checkpoint/
